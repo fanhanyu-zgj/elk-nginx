@@ -29,16 +29,6 @@ services:
       - ./logstash/pipeline:/usr/share/logstash/pipeline
       - ./logs/access.log:/var/log/nginx/access.log
       - ./logstash/config/GeoLite2-City.mmdb:/usr/share/logstash/config/GeoLite2-City.mmdb
-    
-  #   # docker cp logstash:/usr/share/logstash/ ./tmp/logstash/
-  # nginx:
-  #   image: nginx-1.16.1:v1
-  #   container_name: nginx
-  #   ports:
-  #     - 80:80
-  #   volumes:
-  #     - ./logs/access.log:/opt/web_app/nginx-1.12.0/logs/host.access.log
-  #     - ./nginx/nginx.conf:/opt/web_app/nginx-1.12.0/conf/nginx.conf
   nginx:
     image: nginx:1.12.0
     container_name: nginx
