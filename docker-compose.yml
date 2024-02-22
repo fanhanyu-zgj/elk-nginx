@@ -30,7 +30,8 @@ services:
       - ./logs/access.log:/var/log/nginx/access.log
       - ./logstash/config/GeoLite2-City.mmdb:/usr/share/logstash/config/GeoLite2-City.mmdb
   nginx:
-    image: nginx:1.12.0
+    build:
+      context: ./nginx
     container_name: nginx
     ports:
       - 80:80
