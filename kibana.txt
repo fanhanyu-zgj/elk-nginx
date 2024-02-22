@@ -1,0 +1,39 @@
+GET /_template/logstash
+
+
+GET /_template/geoip/
+
+POST /_template/geoip/
+{
+  "index_patterns": [
+    "nginx*"
+  ],
+  "order": 10,
+  "mappings": {
+    "properties": {
+      "clientip": {
+        "type": "ip"
+      },
+      "geoip": {
+        "dynamic": true,
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "geo_point",
+            "ignore_malformed": "true"  
+          },
+          "coordinates": {
+            "type": "geo_point",
+            "ignore_malformed": "true"  
+          },
+          "ip": {
+            "type": "geo_point"
+          }
+        }
+      }
+    }
+  },
+  "aliases": {
+    "nginx": {}
+  }
+}

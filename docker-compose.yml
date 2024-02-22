@@ -1,0 +1,52 @@
+version: "3.0"
+services: 
+  elasticsearch:
+    image: elasticsearch:7.8.0
+    container_name: elasticsearch
+    ports:
+      - 9200:9200
+      - 9300:9300
+    volumes:
+      - D:/work/code/elk/conf/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+  kibana:
+    image: kibana:7.8.0
+    container_name: kibana
+    ports:
+      - 5601:5601
+    volumes:
+      - D:/work/code/elk/conf/kibana.yml:/usr/share/kibana/config/kibana.yml
+  logstash:
+    image: logstash:7.8.0
+    container_name: logstash
+    environment:
+      - ES_JAVA_OPTS="-Duser.timezone=Asia/Shanghai"
+    ports:
+      - 5044:5044
+      - 9600:9600
+    volumes:
+      - D:/work/code/elk/logstash/config:/usr/share/logstash/config
+      - D:/work/code/elk/logstash/data:/usr/share/logstash/data
+      - D:/work/code/elk/logstash/pipeline:/usr/share/logstash/pipeline
+      - D:/work/code/elk/logs/access.log:/var/log/nginx/access.log
+      - D:/work/code/elk/logstash/config/GeoLite2-City.mmdb:/usr/share/logstash/config/GeoLite2-City.mmdb
+    
+  #   # docker cp logstash:/usr/share/logstash/ D:/work/code/elk/tmp/logstash/
+  # nginx:
+  #   image: nginx-1.16.1:v1
+  #   container_name: nginx
+  #   ports:
+  #     - 80:80
+  #   volumes:
+  #     - D:/work/code/elk/logs/access.log:/opt/web_app/nginx-1.12.0/logs/host.access.log
+  #     - D:/work/code/elk/nginx/nginx.conf:/opt/web_app/nginx-1.12.0/conf/nginx.conf
+  nginx:
+    image: nginx:1.12.0
+    container_name: nginx
+    ports:
+      - 80:80
+    volumes:
+      - D:/work/code/elk/logs/access.log:/var/log/nginx/host.access.log
+      - D:/work/code/elk/nginx/nginx.conf:/etc/nginx/nginx.conf
+
+
+    
